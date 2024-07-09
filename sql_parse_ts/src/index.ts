@@ -3,10 +3,14 @@ import type { Express, Request, Response } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { Parser, Option as NSPOption, AST} from 'node-sql-parser';
+import 'dotenv/config';
 
 const app = express();
 const port = process.env.PORT || 3001;
 const cors_url = process.env.CORS || "http://localhost:3000";
+
+console.log(`port: ${port}`);
+console.log(`cors_url: ${cors_url}`);
 
 app.use(
     cors({
@@ -28,6 +32,7 @@ const parser = new Parser();
 
 app.get('/', (req, res) => res.type('html').send('<!DOCTYPE html><html><body>/</body></html>'));
 app.post('/sql', (req: Request, res: Response) => {
+    console.log('/sql posted!');
     try {
         res.setHeader("Access-Control-Allow-Origin", cors_url);
     } catch (e) {
@@ -70,6 +75,7 @@ app.post('/sql', (req: Request, res: Response) => {
         res.type('json').send({'message': 'Could not parse.'});
     }
 
+    console.log(ast);
     res.type('json').send({
         statements: ast,
     });
