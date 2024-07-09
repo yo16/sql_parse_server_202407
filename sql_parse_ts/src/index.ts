@@ -77,7 +77,7 @@ app.post('/sql', (req: Request, res: Response) => {
 
     console.log(ast);
     res.type('json').send({
-        statements: ast,
+        ast,
     });
 })
 
