@@ -7,7 +7,7 @@ import 'dotenv/config';
 
 const app = express();
 const port = process.env.PORT || 3001;
-const cors_url = process.env.CORS || "http://localhost:3000";
+const cors_url = process.env.CORS || "http://localhost:5173";
 const isDevelopMode = (process.env.mode === "development");
 
 if (isDevelopMode) {
@@ -75,11 +75,15 @@ app.post('/sql', (req: Request, res: Response) => {
         if (e instanceof Error) {
             console.error(e.message);
         }
-        res.type('json').send({'message': 'Could not parse.'});
+        res.type('json').send({
+            result: 9,
+            message: 'Could not parse.'
+        });
     }
 
     if (isDevelopMode) { console.log(ast); }
     res.type('json').send({
+        result: 0,
         ast,
     });
 })
